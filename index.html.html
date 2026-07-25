@@ -1,0 +1,615 @@
+
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PHOENIX - Official Web App</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Teko:wght@600;700&family=Montserrat:wght@400;600;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icone -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary: #e31b23;
+            --primary-dark: #990000;
+            --bg-body: #0a0a0c;
+            --bg-card: #141419;
+            --text-main: #ffffff;
+            --text-muted: #8a8a93;
+            --border-color: #22222a;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Montserrat', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- NAVIGATION HEADER --- */
+        header {
+            background-color: #000000;
+            border-bottom: 2px solid var(--primary);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            padding: 10px 20px;
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            cursor: pointer;
+        }
+
+        .brand img {
+            height: 45px;
+            width: auto;
+        }
+
+        .brand-name {
+            font-family: 'Teko', sans-serif;
+            font-size: 32px;
+            letter-spacing: 2px;
+            color: var(--text-main);
+            line-height: 1;
+        }
+
+        /* MENU TABS */
+        nav {
+            display: flex;
+            gap: 8px;
+            overflow-x: auto;
+            padding-bottom: 4px;
+        }
+
+        .nav-tab {
+            background: transparent;
+            border: none;
+            color: var(--text-muted);
+            padding: 8px 16px;
+            font-weight: 600;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            border-radius: 6px;
+            transition: all 0.3s ease;
+            white-space: nowrap;
+        }
+
+        .nav-tab:hover {
+            color: var(--text-main);
+            background-color: rgba(255, 255, 255, 0.05);
+        }
+
+        .nav-tab.active {
+            color: #ffffff;
+            background-color: var(--primary);
+            box-shadow: 0 0 12px rgba(227, 27, 35, 0.4);
+        }
+
+        /* --- STRUTTURA DELLE PAGINE --- */
+        main {
+            flex: 1;
+            max-width: 1100px;
+            width: 100%;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        /* Nasconde le sezioni non attive */
+        .page-section {
+            display: none;
+            animation: fadeIn 0.4s ease-in-out forwards;
+        }
+
+        /* Mostra solo la sezione attiva */
+        .page-section.active-page {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .page-header {
+            margin-bottom: 35px;
+            text-align: center;
+        }
+
+        .page-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 55px;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            line-height: 1;
+        }
+
+        .page-title span {
+            color: var(--primary);
+        }
+
+        .page-subtitle {
+            color: var(--text-muted);
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
+        /* --- HOME PAGE --- */
+        .hero-banner {
+            background: linear-gradient(180deg, rgba(20,20,25,0.6) 0%, rgba(10,10,12,1) 100%), 
+                        radial-gradient(circle, rgba(227,27,35,0.15) 0%, rgba(10,10,12,1) 70%);
+            border: 1px solid var(--border-color);
+            border-radius: 16px;
+            padding: 60px 20px;
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .hero-logo {
+            width: 180px;
+            margin-bottom: 25px;
+            filter: drop-shadow(0 0 25px rgba(227,27,35,0.4));
+        }
+
+        .hero-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 70px;
+            letter-spacing: 4px;
+            line-height: 0.9;
+            margin-bottom: 15px;
+        }
+
+        .quick-nav-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            width: 100%;
+            max-width: 800px;
+            margin-top: 40px;
+        }
+
+        .quick-btn {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 20px;
+            border-radius: 12px;
+            text-align: center;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .quick-btn:hover {
+            border-color: var(--primary);
+            transform: translateY(-3px);
+        }
+
+        .quick-btn i {
+            font-size: 28px;
+            color: var(--primary);
+            margin-bottom: 10px;
+        }
+
+        .quick-btn h4 {
+            text-transform: uppercase;
+            font-size: 14px;
+        }
+
+        /* --- PAGINA ROSA (SQUADRA & STAFF) --- */
+        .category-title {
+            font-family: 'Teko', sans-serif;
+            font-size: 32px;
+            color: var(--primary);
+            letter-spacing: 1px;
+            margin: 30px 0 15px 0;
+            border-bottom: 1px solid var(--border-color);
+            padding-bottom: 5px;
+        }
+
+        .squad-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+
+        .player-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .player-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background-color: var(--primary);
+        }
+
+        .player-number {
+            font-family: 'Teko', sans-serif;
+            font-size: 40px;
+            color: rgba(255, 255, 255, 0.15);
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-weight: 700;
+        }
+
+        .player-avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background-color: #22222a;
+            margin: 0 auto 15px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            color: var(--text-muted);
+        }
+
+        .player-name {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+
+        .player-role {
+            font-size: 12px;
+            color: var(--primary);
+            text-transform: uppercase;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        /* --- CARDS PARTITE/RISULTATI --- */
+        .empty-box {
+            background-color: var(--bg-card);
+            border: 2px dashed var(--border-color);
+            border-radius: 12px;
+            padding: 50px 20px;
+            text-align: center;
+            color: var(--text-muted);
+        }
+
+        .empty-box i {
+            font-size: 40px;
+            margin-bottom: 15px;
+            color: #33333f;
+        }
+
+        /* --- SPONSOR --- */
+        .sponsor-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 20px;
+        }
+
+        .sponsor-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            height: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            font-size: 13px;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        /* --- CONTATTI --- */
+        .contact-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-card {
+            background-color: var(--bg-card);
+            border: 1px solid var(--border-color);
+            padding: 25px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .contact-icon {
+            width: 50px;
+            height: 50px;
+            border-radius: 10px;
+            background-color: rgba(227, 27, 35, 0.1);
+            color: var(--primary);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            flex-shrink: 0;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            background-color: #000000;
+            border-top: 1px solid var(--border-color);
+            padding: 20px;
+            text-align: center;
+            font-size: 12px;
+            color: var(--text-muted);
+            margin-top: auto;
+        }
+
+        /* --- MOBILE ADJUSTMENTS --- */
+        @media (max-width: 600px) {
+            .header-container {
+                flex-direction: column;
+                gap: 15px;
+            }
+            nav {
+                width: 100%;
+                justify-content: flex-start;
+            }
+            .hero-title { font-size: 50px; }
+            .page-title { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- HEADER / MENU PRINCIPALE -->
+    <header>
+        <div class="header-container">
+            <div class="brand" onclick="switchPage('home')">
+                <img src="logo-phoenix.png" alt="Logo Phoenix">
+                <span class="brand-name">PHOENIX</span>
+            </div>
+            
+            <!-- PULSANTI PER CAMBIARE SEZIONE -->
+            <nav>
+                <button class="nav-tab active" onclick="switchPage('home')">Home</button>
+                <button class="nav-tab" onclick="switchPage('rosa')">Rosa</button>
+                <button class="nav-tab" onclick="switchPage('partite')">Partite</button>
+                <button class="nav-tab" onclick="switchPage('risultati')">Risultati</button>
+                <button class="nav-tab" onclick="switchPage('sponsor')">Sponsor</button>
+                <button class="nav-tab" onclick="switchPage('contatti')">Contatti</button>
+            </nav>
+        </div>
+    </header>
+
+    <main>
+
+        <!-- 1. SEZIONE HOME -->
+        <section id="page-home" class="page-section active-page">
+            <div class="hero-banner">
+                <img src="logo-phoenix.png" alt="Logo Phoenix" class="hero-logo">
+                <h1 class="hero-title">PHOENIX</h1>
+                <p style="color: var(--text-muted); max-width: 500px;">Sito Ufficiale della squadra amatoriale. Consulta la rosa, i prossimi impegni e i risultati stagionali.</p>
+                
+                <div class="quick-nav-grid">
+                    <div class="quick-btn" onclick="switchPage('rosa')">
+                        <i class="fas fa-users"></i>
+                        <h4>La Rosa</h4>
+                    </div>
+                    <div class="quick-btn" onclick="switchPage('partite')">
+                        <i class="fas fa-calendar-alt"></i>
+                        <h4>Prossime Partite</h4>
+                    </div>
+                    <div class="quick-btn" onclick="switchPage('risultati')">
+                        <i class="fas fa-trophy"></i>
+                        <h4>Ultimi Risultati</h4>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 2. SEZIONE ROSA (GIOCATORI E STAFF) -->
+        <section id="page-rosa" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">LA <span>ROSA</span></h2>
+                <p class="page-subtitle">Giocatori e Staff Tecnico della stagione</p>
+            </div>
+
+            <!-- PORTIERI -->
+            <h3 class="category-title"><i class="fas fa-hands"></i> Portieri</h3>
+            <div class="squad-grid">
+                <!-- GIOCATORE ESEMPIO (Duplica questo blocco per aggiungerne altri) -->
+                <div class="player-card">
+                    <span class="player-number">1</span>
+                    <div class="player-avatar"><i class="fas fa-user"></i></div>
+                    <div class="player-name">Nome Cognome</div>
+                    <div class="player-role">Portiere</div>
+                </div>
+            </div>
+
+            <!-- GIOCATORI DI MOVIMENTO -->
+            <h3 class="category-title"><i class="fas fa-running"></i> Giocatori di Movimento</h3>
+            <div class="squad-grid">
+                <div class="player-card">
+                    <span class="player-number">10</span>
+                    <div class="player-avatar"><i class="fas fa-user"></i></div>
+                    <div class="player-name">Nome Cognome</div>
+                    <div class="player-role">Giocatore</div>
+                </div>
+                <div class="player-card">
+                    <span class="player-number">7</span>
+                    <div class="player-avatar"><i class="fas fa-user"></i></div>
+                    <div class="player-name">Nome Cognome</div>
+                    <div class="player-role">Giocatore</div>
+                </div>
+            </div>
+
+            <!-- STAFF TECNICO -->
+            <h3 class="category-title"><i class="fas fa-user-tie"></i> Staff Tecnico</h3>
+            <div class="squad-grid">
+                <div class="player-card">
+                    <div class="player-avatar"><i class="fas fa-clipboard-user"></i></div>
+                    <div class="player-name">Nome Cognome</div>
+                    <div class="player-role">Allenatore</div>
+                </div>
+                <div class="player-card">
+                    <div class="player-avatar"><i class="fas fa-briefcase"></i></div>
+                    <div class="player-name">Nome Cognome</div>
+                    <div class="player-role">Dirigente</div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- 3. SEZIONE PARTITE -->
+        <section id="page-partite" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">PROSSIME <span>PARTITE</span></h2>
+                <p class="page-subtitle">Calendario e appuntamenti di campionato</p>
+            </div>
+            
+            <div class="empty-box">
+                <i class="fas fa-calendar-times"></i>
+                <h3>Nessuna partita programmata</h3>
+                <p>I dettagli delle prossime gare verranno inseriti a breve.</p>
+            </div>
+        </section>
+
+
+        <!-- 4. SEZIONE RISULTATI -->
+        <section id="page-risultati" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">ULTIMI <span>RISULTATI</span></h2>
+                <p class="page-subtitle">Punteggi e referti delle ultime uscite</p>
+            </div>
+
+            <div class="empty-box">
+                <i class="fas fa-poll-h"></i>
+                <h3>Nessun risultato registrato</h3>
+                <p>I risultati compariranno qui al termine delle partite.</p>
+            </div>
+        </section>
+
+
+        <!-- 5. SEZIONE SPONSOR -->
+        <section id="page-sponsor" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title">I NOSTRI <span>SPONSOR</span></h2>
+                <p class="page-subtitle">Partner ufficiali che sostengono il progetto PHOENIX</p>
+            </div>
+
+            <div class="sponsor-grid">
+                <div class="sponsor-card">Spazio Sponsor 1</div>
+                <div class="sponsor-card">Spazio Sponsor 2</div>
+                <div class="sponsor-card">Spazio Sponsor 3</div>
+                <div class="sponsor-card">Spazio Sponsor 4</div>
+            </div>
+        </section>
+        <!-- 6. SEZIONE CONTATTI -->
+        <section id="page-contatti" class="page-section">
+            <div class="page-header">
+                <h2 class="page-title"><span>CONTATTI</span> E UNISCITI A NOI</h2>
+                <p class="page-subtitle">Rimani in contatto con la squadra o invia la tua candidatura</p>
+            </div>
+
+            <div class="contact-list">
+                <!-- EMAIL -->
+                <div class="contact-card">
+                    <div class="contact-icon"><i class="fas fa-envelope"></i></div>
+                    <div>
+                        <h4 style="text-transform: uppercase; font-size: 14px;">Email</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">
+                            <a href="mailto:phoenixrovigo@gmail.com">phoenixrovigo@gmail.com</a>
+                        </p>
+                    </div>
+                </div>
+
+                <!-- INSTAGRAM -->
+                <a href="https://www.instagram.com/phoenixrovigo?igsh=cjVkZG92ODlwdzF4&utm_source=qr" target="_blank" class="contact-card" style="text-decoration: none;">
+                    <div class="contact-icon" style="color: #e1306c; background-color: rgba(225, 48, 108, 0.1);">
+                        <i class="fab fa-instagram"></i>
+                    </div>
+                    <div>
+                        <h4 style="text-transform: uppercase; font-size: 14px; color: var(--text-main);">Instagram</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">@phoenixrovigo</p>
+                    </div>
+                </a>
+
+                <!-- CANDIDATURE -->
+                <a href="https://docs.google.com/forms/d/e/1FAIpQLSclyOh5-6D5jBwY3kyMAOf8yC5YtN8yE5kaDrOMqtIGEvAshA/viewform?usp=publish-editor" target="_blank" class="contact-card" style="text-decoration: none; border-color: var(--primary);">
+                    <div class="contact-icon">
+                        <i class="fas fa-file-signature"></i>
+                    </div>
+                    <div>
+                        <h4 style="text-transform: uppercase; font-size: 14px; color: var(--primary);">Candidature</h4>
+                        <p style="color: var(--text-muted); font-size: 14px;">Compila il modulo per unirti alla squadra</p>
+                    </div>
+                </a>
+            </div>
+        </section>
+
+
+        
+    </main>
+
+    <!-- FOOTER -->
+    <footer>
+        &copy; 2026 PHOENIX - Tutti i diritti riservati.
+    </footer>
+
+    <!-- LOGICA DI SPOSTAMENTO TRA PAGINE -->
+    <script>
+        function switchPage(pageId) {
+            // 1. Nascondi tutte le sezioni
+            const sections = document.querySelectorAll('.page-section');
+            sections.forEach(sec => sec.classList.remove('active-page'));
+
+            // 2. Rimuovi lo stato attivo da tutti i pulsanti del menu
+            const tabs = document.querySelectorAll('.nav-tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+
+            // 3. Mostra la sezione selezionata
+            const targetPage = document.getElementById('page-' + pageId);
+            if (targetPage) {
+                targetPage.classList.add('active-page');
+            }
+
+            // 4. Seleziona il relativo pulsante nel menu
+            tabs.forEach(tab => {
+                if (tab.getAttribute('onclick').includes(pageId)) {
+                    tab.classList.add('active');
+                }
+            });
+
+            // Torna in cima alla pagina ad ogni cambio
+            window.scrollTo({top: 0, behavior: 'smooth'});
+        }
+    </script>
+</body>
+</html>
